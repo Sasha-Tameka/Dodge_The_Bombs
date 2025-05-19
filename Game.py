@@ -7,9 +7,10 @@ score = 0
 squaresToClear = 0
 
 # Create the game board
+bombfield = []
 def create_bombfield():
     global squaresToClear
-    bombfield = []
+    
     for row in range(1, 10):
         rowList = []
         for column in range(1, 10):
@@ -46,11 +47,11 @@ def layout_window(window):
     for rowNumber, rowList in enumerate(bombfield):
         for columnNumber, columnEntry in enumerate(rowList):
             if random.randint(1,100)<25:
-                square = tkinter.Label(window, text="X", bg="darkgreen")
-            elif randint(1,100)>75:
-                square = tkinter.Label(window, text="X", bg="seagreen")
+                square = tkinter.Label(window, text=" ", bg="darkgreen")
+            elif random.randint(1,100)>75:
+                square = tkinter.Label(window, text=" ", bg="seagreen")
             else:
-                square = tkinter.Label(window, text="X", bg="green")
+                square = tkinter.Label(window, text=" ", bg="green")
             square.grid(row=rowNumber, column=columnNumber)
 
 # Run the game
