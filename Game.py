@@ -47,11 +47,11 @@ def layout_window(window):
     for rowNumber, rowList in enumerate(bombfield):
         for columnNumber, columnEntry in enumerate(rowList):
             if random.randint(1,100)<25:
-                square = tkinter.Label(window, text=" ", bg="darkgreen")
+                square = tkinter.Label(window, text="    ", bg="darkgreen")
             elif random.randint(1,100)>75:
-                square = tkinter.Label(window, text=" ", bg="seagreen")
+                square = tkinter.Label(window, text="    ", bg="seagreen")
             else:
-                square = tkinter.Label(window, text=" ", bg="green")
+                square = tkinter.Label(window, text="    ", bg="green")
             square.grid(row=rowNumber, column=columnNumber)
 
 # Run the game
