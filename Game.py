@@ -2,7 +2,7 @@ import tkinter
 import random
 
 # Track whether the game is over, the score, and how many squares to clear
-game_over = False
+gameOver = False
 score = 0
 squaresToClear = 0
 
@@ -21,7 +21,7 @@ def create_bombfield():
                 squaresToClear += 1
         bombfield.append(rowList)
     printfield(bombfield)
-    return bombfield
+    #return bombfield
 
 # Print the board in the console
 def printfield(bombfield):
@@ -53,6 +53,61 @@ def layout_window(window):
             else:
                 square = tkinter.Label(window, text="    ", bg="green")
             square.grid(row=rowNumber, column=columnNumber)
+            square.bind("<Button-1>", on_click)
+            
+#click function
+def on_click(event):
+    global score
+    global gameOver
+    global squaresToClear
+    
+    square = event.widget
+    row = int(square.grid_info()["row"])
+    column = int(square.grid_info()["column"])
+    currentText = square.cget("text")
+    
+    if bombfield[row][column] == 1:
+        gameOver= True
+        square.config(bg = "red")
+        print("Game Over! You hit a bomb!")
+        print("Your score was:", score)
+    elif currentText == "    ":
+        square.config(bg = "brown")
+        totalBombs = 0
+        
+        if row < 9:
+            if bombfield[row+1][column] == 1:
+                totalBombs += 1
+        if row > 0:
+            if bombfield[row-1][column] == 1:
+                totalBombs += 1
+        if column > 0:
+            if bombfield[row][column-1] == 1:
+                totalBombs += 1
+        if column < 9:
+            if bombfield[row][column-1] == 1:
+                totalBombs += 1
+        if row > 0 and column > 0:
+            if bombfield[row-1][column-1] == 1:
+                totalBombs += 1
+        if row < 9 and column < 9:
+            if bombfield[row+1][column+1] == 1:
+                totalBombs += 1
+        if row < 9 and column > 0:
+            if bombfield[row+1][column-1] == 1:
+                totalBombs += 1
+        if row > 0 and column < 9:
+            if bombfield[row-1][column+1] == 1:
+                totalBombs += 1
+                
+        square.config(text = " " + str(totalBombs) + " ")
+        score += 1
+        squaresToClear -= 1
+        
+        if squaresToClear == 0:
+            gameOver = True
+            print("Well done! You cleared the board!")
+            print("Your score was:", score)
 
 # Run the game
 play_bombdodger()
